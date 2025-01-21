@@ -65,7 +65,7 @@ class GameViewModel with ChangeNotifier {
           correctAnswer -= num;
           break;
         case 2:
-          operatorSymbol = '*';
+          operatorSymbol = '×';
           correctAnswer *= num;
           break;
         case 3:
@@ -88,7 +88,7 @@ class GameViewModel with ChangeNotifier {
               }
               correctAnswer -= num;
               break;
-            case '*':
+            case '×':
               correctAnswer *= num;
               break;
             case '/':
@@ -130,7 +130,7 @@ class GameViewModel with ChangeNotifier {
   }
 
   String _getRandomOperator() {
-    List<String> operators = ['+', '-', '*', '/'];
+    List<String> operators = ['+', '-', '×', '/'];
     return operators[_random.nextInt(operators.length)];
   }
 

@@ -22,6 +22,9 @@ class HomeRoot extends StatelessWidget {
             viewModel.selectLevel(level);
             context.go('/game/${viewModel.state.operator}/${viewModel.state.level}');
           },
+          onBackTap: () {
+            viewModel.resetOperation();
+          },
         );
       },
     );

@@ -20,4 +20,11 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void resetOperation() {
+    _state = _state.copyWith(
+      operator: null,
+    );
+    notifyListeners();
+  }
+
 }
