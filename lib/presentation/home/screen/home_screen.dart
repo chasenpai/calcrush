@@ -1,6 +1,5 @@
+import 'package:calcrush/presentation/components/common_flexible_button.dart';
 import 'package:calcrush/presentation/components/common_text_button.dart';
-import 'package:calcrush/presentation/components/level_button.dart';
-import 'package:calcrush/presentation/components/operator_button.dart';
 import 'package:calcrush/presentation/home/home_state.dart';
 import 'package:calcrush/ui/ui_colors.dart';
 import 'package:flutter/material.dart';
@@ -52,22 +51,24 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: OperatorButton(
-                              operator: '+',
+                            child: CommonFlexibleButton(
+                              text: '+',
                               onPressed: () {
                                 onOperatorTap(0);
                               },
                               color: lightBlue,
+                              fontSize: 62.0,
                             ),
                           ),
                           const SizedBox(width: 16.0,),
                           Expanded(
-                            child: OperatorButton(
-                              operator: '-',
+                            child: CommonFlexibleButton(
+                              text: '-',
                               onPressed: () {
                                 onOperatorTap(1);
                               },
                               color: skyBlue,
+                              fontSize: 62.0,
                             ),
                           ),
                         ],
@@ -76,22 +77,24 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: OperatorButton(
-                              operator: '×',
+                            child: CommonFlexibleButton(
+                              text: '×',
                               onPressed: () {
                                 onOperatorTap(2);
                               },
                               color: dodgerBlue,
+                              fontSize: 62.0,
                             ),
                           ),
                           const SizedBox(width: 16.0,),
                           Expanded(
-                            child: OperatorButton(
-                              operator: '÷',
+                            child: CommonFlexibleButton(
+                              text: '÷',
                               onPressed: () {
                                 onOperatorTap(3);
                               },
                               color: royalBlue,
+                              fontSize: 62.0,
                             ),
                           ),
                         ],
@@ -115,32 +118,35 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: LevelButton(
-                              level: '1',
+                            child: CommonFlexibleButton(
+                              text: '1',
                               onPressed: () {
                                 onLevelTap(0);
                               },
                               color: skyBlue,
+                              fontSize: 48.0,
                             ),
                           ),
                           const SizedBox(width: 16.0,),
                           Expanded(
-                            child: LevelButton(
-                              level: '2',
+                            child: CommonFlexibleButton(
+                              text: '2',
                               onPressed: () {
                                 onLevelTap(1);
                               },
                               color: dodgerBlue,
+                              fontSize: 48.0,
                             ),
                           ),
                           const SizedBox(width: 16.0,),
                           Expanded(
-                            child: LevelButton(
-                              level: '3',
+                            child: CommonFlexibleButton(
+                              text: '3',
                               onPressed: () {
                                 onLevelTap(2);
                               },
                               color: royalBlue,
+                              fontSize: 48.0,
                             ),
                           ),
                         ],

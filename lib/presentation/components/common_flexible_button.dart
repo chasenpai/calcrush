@@ -1,23 +1,25 @@
 import 'package:calcrush/ui/ui_colors.dart';
 import 'package:flutter/material.dart';
 
-class OperatorButton extends StatefulWidget {
-  final String operator;
+class CommonFlexibleButton extends StatefulWidget {
+  final String text;
   final VoidCallback onPressed;
   final Color color;
+  final double fontSize;
 
-  const OperatorButton({
-    required this.operator,
+  const CommonFlexibleButton({
+    required this.text,
     required this.onPressed,
     required this.color,
+    required this.fontSize,
     super.key,
   });
 
   @override
-  State<OperatorButton> createState() => _OperatorButtonState();
+  State<CommonFlexibleButton> createState() => _CommonFlexibleButtonState();
 }
 
-class _OperatorButtonState extends State<OperatorButton> {
+class _CommonFlexibleButtonState extends State<CommonFlexibleButton> {
 
   bool _isPressed = false;
 
@@ -41,6 +43,9 @@ class _OperatorButtonState extends State<OperatorButton> {
         });
       },
       child: Container(
+        constraints: const BoxConstraints(
+          minHeight: 86.0,
+        ),
         decoration: BoxDecoration(
           color: _isPressed ? lightGrey : widget.color,
           borderRadius: BorderRadius.circular(10.0),
@@ -49,13 +54,16 @@ class _OperatorButtonState extends State<OperatorButton> {
           horizontal: 12.0,
           vertical: 9.0,
         ),
-        child: Center(
-          child: Text(
-            widget.operator,
-            style: const TextStyle(
-              fontSize: 62.0,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Center(
+            child: Text(
+              widget.text,
+              style: TextStyle(
+                fontSize: widget.fontSize,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
