@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 
 class GameViewModel with ChangeNotifier {
 
-  Timer? _timer;
   final Random _random = Random();
 
   GameState _state = const GameState();
@@ -21,20 +20,10 @@ class GameViewModel with ChangeNotifier {
     _state = _state.copyWith(
       isStarted: true,
     );
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (state.timeRemaining > 0) {
-        _state = _state.copyWith(
-          timeRemaining: _state.timeRemaining - 1,
-        );
-        notifyListeners();
-      }else {
-        _timer?.cancel();
-        _gameEndController.add(_state.score);
-      }
-    });
   }
 
   void stopGame() async {
+    _gameEndController.add(_state.score);
   }
 
   void generateQuestion(int operator, int level, int digits) async {
@@ -125,6 +114,8 @@ class GameViewModel with ChangeNotifier {
     );
     _state = _state.copyWith(
       question: question,
+      isCorrect: false,
+      isWrong: false,
     );
     notifyListeners();
   }
@@ -135,22 +126,22 @@ class GameViewModel with ChangeNotifier {
   }
 
   void correctAnswer() async {
-    if(_state.timeRemaining > 0) {
-      _state = _state.copyWith(
-        timeRemaining: _state.timeRemaining + 5,
-        score: _state.score + 100,
-      );
-      notifyListeners();
-    }
+    _state = _state.copyWith(
+      score: _state.score + 10,
+      isCorrect: true,
+    );
+    notifyListeners();
   }
 
   void wrongAnswer() async {
-    if(_state.timeRemaining > 0) {
+    if(_state.life > 1) {
       _state = _state.copyWith(
-        timeRemaining: _state.timeRemaining > 3 ? _state.timeRemaining - 3 : 0,
-        //score: _state.score - 100,
+        life: _state.life - 1,
+        isWrong: true,
       );
       notifyListeners();
+    }else {
+      stopGame();
     }
   }
 

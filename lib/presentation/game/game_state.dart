@@ -8,9 +8,11 @@ part 'game_state.g.dart';
 class GameState with _$GameState {
   const factory GameState({
     @Default(false) bool isStarted,
-    @Default(30) int timeRemaining,
+    @Default(false) bool isWrong,
+    @Default(false) bool isCorrect,
     @Default(0) int score,
     Question? question,
+    @Default(3) int life,
   }) = _GameState;
 
   factory GameState.fromJson(Map<String, dynamic> json) => _$GameStateFromJson(json);

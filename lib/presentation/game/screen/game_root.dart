@@ -74,12 +74,15 @@ class _GameRootState extends State<GameRoot> {
       builder: (context, _) {
         return GameScreen(
           state: _viewModel.state,
-          onOptionTap: (value) {
+          onOptionTap: (value) async {
             if(value == _viewModel.state.question!.correctAnswer) {
               _viewModel.correctAnswer();
+              await Future.delayed(const Duration(milliseconds: 1500));
               _viewModel.generateQuestion(widget.operator, widget.level, 1);
             }else {
               _viewModel.wrongAnswer();
+              await Future.delayed(const Duration(milliseconds: 1500));
+              _viewModel.generateQuestion(widget.operator, widget.level, 1);
             }
           },
         );

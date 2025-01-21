@@ -21,9 +21,11 @@ GameState _$GameStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GameState {
   bool get isStarted => throw _privateConstructorUsedError;
-  int get timeRemaining => throw _privateConstructorUsedError;
+  bool get isWrong => throw _privateConstructorUsedError;
+  bool get isCorrect => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
   Question? get question => throw _privateConstructorUsedError;
+  int get life => throw _privateConstructorUsedError;
 
   /// Serializes this GameState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +42,13 @@ abstract class $GameStateCopyWith<$Res> {
   factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
       _$GameStateCopyWithImpl<$Res, GameState>;
   @useResult
-  $Res call({bool isStarted, int timeRemaining, int score, Question? question});
+  $Res call(
+      {bool isStarted,
+      bool isWrong,
+      bool isCorrect,
+      int score,
+      Question? question,
+      int life});
 
   $QuestionCopyWith<$Res>? get question;
 }
@@ -61,19 +69,25 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
   @override
   $Res call({
     Object? isStarted = null,
-    Object? timeRemaining = null,
+    Object? isWrong = null,
+    Object? isCorrect = null,
     Object? score = null,
     Object? question = freezed,
+    Object? life = null,
   }) {
     return _then(_value.copyWith(
       isStarted: null == isStarted
           ? _value.isStarted
           : isStarted // ignore: cast_nullable_to_non_nullable
               as bool,
-      timeRemaining: null == timeRemaining
-          ? _value.timeRemaining
-          : timeRemaining // ignore: cast_nullable_to_non_nullable
-              as int,
+      isWrong: null == isWrong
+          ? _value.isWrong
+          : isWrong // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
       score: null == score
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
@@ -82,6 +96,10 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as Question?,
+      life: null == life
+          ? _value.life
+          : life // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -108,7 +126,13 @@ abstract class _$$GameStateImplCopyWith<$Res>
       __$$GameStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isStarted, int timeRemaining, int score, Question? question});
+  $Res call(
+      {bool isStarted,
+      bool isWrong,
+      bool isCorrect,
+      int score,
+      Question? question,
+      int life});
 
   @override
   $QuestionCopyWith<$Res>? get question;
@@ -128,19 +152,25 @@ class __$$GameStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isStarted = null,
-    Object? timeRemaining = null,
+    Object? isWrong = null,
+    Object? isCorrect = null,
     Object? score = null,
     Object? question = freezed,
+    Object? life = null,
   }) {
     return _then(_$GameStateImpl(
       isStarted: null == isStarted
           ? _value.isStarted
           : isStarted // ignore: cast_nullable_to_non_nullable
               as bool,
-      timeRemaining: null == timeRemaining
-          ? _value.timeRemaining
-          : timeRemaining // ignore: cast_nullable_to_non_nullable
-              as int,
+      isWrong: null == isWrong
+          ? _value.isWrong
+          : isWrong // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
       score: null == score
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
@@ -149,6 +179,10 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as Question?,
+      life: null == life
+          ? _value.life
+          : life // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -158,9 +192,11 @@ class __$$GameStateImplCopyWithImpl<$Res>
 class _$GameStateImpl implements _GameState {
   const _$GameStateImpl(
       {this.isStarted = false,
-      this.timeRemaining = 30,
+      this.isWrong = false,
+      this.isCorrect = false,
       this.score = 0,
-      this.question});
+      this.question,
+      this.life = 3});
 
   factory _$GameStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$GameStateImplFromJson(json);
@@ -170,16 +206,22 @@ class _$GameStateImpl implements _GameState {
   final bool isStarted;
   @override
   @JsonKey()
-  final int timeRemaining;
+  final bool isWrong;
+  @override
+  @JsonKey()
+  final bool isCorrect;
   @override
   @JsonKey()
   final int score;
   @override
   final Question? question;
+  @override
+  @JsonKey()
+  final int life;
 
   @override
   String toString() {
-    return 'GameState(isStarted: $isStarted, timeRemaining: $timeRemaining, score: $score, question: $question)';
+    return 'GameState(isStarted: $isStarted, isWrong: $isWrong, isCorrect: $isCorrect, score: $score, question: $question, life: $life)';
   }
 
   @override
@@ -189,17 +231,19 @@ class _$GameStateImpl implements _GameState {
             other is _$GameStateImpl &&
             (identical(other.isStarted, isStarted) ||
                 other.isStarted == isStarted) &&
-            (identical(other.timeRemaining, timeRemaining) ||
-                other.timeRemaining == timeRemaining) &&
+            (identical(other.isWrong, isWrong) || other.isWrong == isWrong) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.question, question) ||
-                other.question == question));
+                other.question == question) &&
+            (identical(other.life, life) || other.life == life));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isStarted, timeRemaining, score, question);
+  int get hashCode => Object.hash(
+      runtimeType, isStarted, isWrong, isCorrect, score, question, life);
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
@@ -220,9 +264,11 @@ class _$GameStateImpl implements _GameState {
 abstract class _GameState implements GameState {
   const factory _GameState(
       {final bool isStarted,
-      final int timeRemaining,
+      final bool isWrong,
+      final bool isCorrect,
       final int score,
-      final Question? question}) = _$GameStateImpl;
+      final Question? question,
+      final int life}) = _$GameStateImpl;
 
   factory _GameState.fromJson(Map<String, dynamic> json) =
       _$GameStateImpl.fromJson;
@@ -230,11 +276,15 @@ abstract class _GameState implements GameState {
   @override
   bool get isStarted;
   @override
-  int get timeRemaining;
+  bool get isWrong;
+  @override
+  bool get isCorrect;
   @override
   int get score;
   @override
   Question? get question;
+  @override
+  int get life;
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
