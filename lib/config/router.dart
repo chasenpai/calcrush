@@ -1,5 +1,6 @@
 import 'package:calcrush/presentation/game/screen/game_root.dart';
-import 'package:calcrush/presentation/home/screen/home_root.dart';
+import 'package:calcrush/presentation/home/home_screen.dart';
+import 'package:calcrush/presentation/ready/screen/ready_root.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -7,7 +8,11 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomeRoot(),
+      builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/ready',
+      builder: (context, state) => const ReadyRoot(),
     ),
     GoRoute(
       path: '/game/:operator/:level',

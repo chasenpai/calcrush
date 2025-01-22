@@ -1,10 +1,10 @@
-import 'package:calcrush/presentation/home/home_state.dart';
+import 'package:calcrush/presentation/ready/ready_state.dart';
 import 'package:flutter/cupertino.dart';
 
-class HomeViewModel with ChangeNotifier {
+class ReadyViewModel with ChangeNotifier {
 
-  HomeState _state = const HomeState();
-  HomeState get state => _state;
+  ReadyState _state = const ReadyState();
+  ReadyState get state => _state;
 
   void selectOperation(int operator) {
     _state = _state.copyWith(

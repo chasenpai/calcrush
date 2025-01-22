@@ -1,16 +1,17 @@
 import 'package:calcrush/presentation/components/common_flexible_button.dart';
 import 'package:calcrush/presentation/components/common_text_button.dart';
-import 'package:calcrush/presentation/home/home_state.dart';
+import 'package:calcrush/presentation/ready/ready_state.dart';
 import 'package:calcrush/ui/ui_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
-  final HomeState state;
+class ReadyScreen extends StatelessWidget {
+  final ReadyState state;
   final Function(int) onOperatorTap;
   final Function(int) onLevelTap;
   final VoidCallback onBackTap;
 
-  const HomeScreen({
+  const ReadyScreen({
     required this.state,
     required this.onOperatorTap,
     required this.onLevelTap,
@@ -21,6 +22,19 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            if(state.operator == null && state.level == null) context.pop();
+            if(state.operator != null && state.level == null) onBackTap();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black87,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -30,17 +44,24 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                child: Center(
-                  child: Text(
-                    state.operator == null && state.level == null
-                      ? 'Choose an operator'
-                      : 'Choose a level',
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          state.operator == null && state.level == null
+                            ? 'Choose an operator'
+                            : 'Choose a level',
+                          style: const TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: kToolbarHeight,),
+                  ],
                 ),
               ),
               if(state.operator == null && state.level == null)
@@ -150,12 +171,6 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(height: 32.0,),
-                      CommonTextButton(
-                        text: 'Back',
-                        color: deepRoyalBlue,
-                        onPressed: onBackTap,
                       ),
                     ],
                   ),

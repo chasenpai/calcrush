@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:calcrush/config/di_setup.dart';
+import 'package:calcrush/presentation/components/game_over_dialog.dart';
 import 'package:calcrush/presentation/game/game_view_model.dart';
 import 'package:calcrush/presentation/game/screen/game_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,24 +36,16 @@ class _GameRootState extends State<GameRoot> {
           context: context,
           barrierDismissible: false,
           builder: (context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              title: const Text(
-                'Game Over',
-              ),
-              content: Text(
-                'your score ${score.toString()}',
-              ),
-              actions: [
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/');
-                  },
-                  child: const Text(
-                    'Confirm',
-                  ),
-                ),
-              ],
+            return GameOverDialog(
+              score: score,
+              bestScore: 450,
+              onCancelPressed: () {
+                context.go('/');
+              },
+              onAcceptPressed: () {
+                context.go('/');
+              },
+              //isWatchAd: true,
             );
           },
         );
@@ -82,7 +75,9 @@ class _GameRootState extends State<GameRoot> {
             }else {
               _viewModel.wrongAnswer();
               await Future.delayed(const Duration(milliseconds: 1500));
-              _viewModel.generateQuestion(widget.operator, widget.level, 1);
+              if(_viewModel.state.isStarted) {
+                _viewModel.generateQuestion(widget.operator, widget.level, 1);
+              }
             }
           },
         );

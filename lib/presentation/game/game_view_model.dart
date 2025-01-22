@@ -23,6 +23,9 @@ class GameViewModel with ChangeNotifier {
   }
 
   void stopGame() async {
+    _state = _state.copyWith(
+      isStarted: false,
+    );
     _gameEndController.add(_state.score);
   }
 

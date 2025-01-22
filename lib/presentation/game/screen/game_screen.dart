@@ -48,11 +48,11 @@ class GameScreen extends StatelessWidget {
               ),
               if(state.question != null)
                 Expanded(
+                  flex: 2,
                   child: SizedBox(
-
                     child: state.isCorrect || state.isWrong ? Center(
                       child: Text(
-                        state.isCorrect ? 'Correct!' : 'Wrong..',
+                        state.isCorrect ? 'Correct!' : 'Wrong',
                         style: TextStyle(
                           fontSize: 32.0,
                           fontWeight: FontWeight.w700,
@@ -64,7 +64,7 @@ class GameScreen extends StatelessWidget {
                 ),
               if(state.question != null)
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     state.isWrong
                       ? '${state.question!.expression} = ${state.question!.correctAnswer}'
