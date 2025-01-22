@@ -1,4 +1,4 @@
-import 'package:calcrush/model/question.dart';
+import 'package:calcrush/domain/model/question.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'game_state.freezed.dart';
@@ -11,6 +11,7 @@ class GameState with _$GameState {
     @Default(false) bool isWrong,
     @Default(false) bool isCorrect,
     @Default(0) int score,
+    int? bestScore,
     Question? question,
     @Default(3) int life,
   }) = _GameState;

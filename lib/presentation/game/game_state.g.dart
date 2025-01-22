@@ -12,6 +12,7 @@ _$GameStateImpl _$$GameStateImplFromJson(Map<String, dynamic> json) =>
       isWrong: json['isWrong'] as bool? ?? false,
       isCorrect: json['isCorrect'] as bool? ?? false,
       score: (json['score'] as num?)?.toInt() ?? 0,
+      bestScore: (json['bestScore'] as num?)?.toInt(),
       question: json['question'] == null
           ? null
           : Question.fromJson(json['question'] as Map<String, dynamic>),
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$GameStateImplToJson(_$GameStateImpl instance) =>
       'isWrong': instance.isWrong,
       'isCorrect': instance.isCorrect,
       'score': instance.score,
+      'bestScore': instance.bestScore,
       'question': instance.question,
       'life': instance.life,
     };

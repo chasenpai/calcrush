@@ -38,9 +38,15 @@ class _GameRootState extends State<GameRoot> {
           builder: (context) {
             return GameOverDialog(
               score: score,
-              bestScore: 450,
-              onCancelPressed: () {
-                context.go('/');
+              //todo !
+              bestScore: _viewModel.state.bestScore!,
+              onCancelPressed: () async {
+                if(_viewModel.state.score > _viewModel.state.bestScore!) {
+                  await _viewModel.updateRecord(widget.operator, widget.level);
+                  context.go('/');
+                }else {
+                  context.go('/');
+                }
               },
               onAcceptPressed: () {
                 context.go('/');

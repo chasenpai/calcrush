@@ -24,6 +24,7 @@ mixin _$GameState {
   bool get isWrong => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
+  int? get bestScore => throw _privateConstructorUsedError;
   Question? get question => throw _privateConstructorUsedError;
   int get life => throw _privateConstructorUsedError;
 
@@ -47,6 +48,7 @@ abstract class $GameStateCopyWith<$Res> {
       bool isWrong,
       bool isCorrect,
       int score,
+      int? bestScore,
       Question? question,
       int life});
 
@@ -72,6 +74,7 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
     Object? isWrong = null,
     Object? isCorrect = null,
     Object? score = null,
+    Object? bestScore = freezed,
     Object? question = freezed,
     Object? life = null,
   }) {
@@ -92,6 +95,10 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
+      bestScore: freezed == bestScore
+          ? _value.bestScore
+          : bestScore // ignore: cast_nullable_to_non_nullable
+              as int?,
       question: freezed == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
@@ -131,6 +138,7 @@ abstract class _$$GameStateImplCopyWith<$Res>
       bool isWrong,
       bool isCorrect,
       int score,
+      int? bestScore,
       Question? question,
       int life});
 
@@ -155,6 +163,7 @@ class __$$GameStateImplCopyWithImpl<$Res>
     Object? isWrong = null,
     Object? isCorrect = null,
     Object? score = null,
+    Object? bestScore = freezed,
     Object? question = freezed,
     Object? life = null,
   }) {
@@ -175,6 +184,10 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
+      bestScore: freezed == bestScore
+          ? _value.bestScore
+          : bestScore // ignore: cast_nullable_to_non_nullable
+              as int?,
       question: freezed == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
@@ -195,6 +208,7 @@ class _$GameStateImpl implements _GameState {
       this.isWrong = false,
       this.isCorrect = false,
       this.score = 0,
+      this.bestScore,
       this.question,
       this.life = 3});
 
@@ -214,6 +228,8 @@ class _$GameStateImpl implements _GameState {
   @JsonKey()
   final int score;
   @override
+  final int? bestScore;
+  @override
   final Question? question;
   @override
   @JsonKey()
@@ -221,7 +237,7 @@ class _$GameStateImpl implements _GameState {
 
   @override
   String toString() {
-    return 'GameState(isStarted: $isStarted, isWrong: $isWrong, isCorrect: $isCorrect, score: $score, question: $question, life: $life)';
+    return 'GameState(isStarted: $isStarted, isWrong: $isWrong, isCorrect: $isCorrect, score: $score, bestScore: $bestScore, question: $question, life: $life)';
   }
 
   @override
@@ -235,6 +251,8 @@ class _$GameStateImpl implements _GameState {
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
             (identical(other.score, score) || other.score == score) &&
+            (identical(other.bestScore, bestScore) ||
+                other.bestScore == bestScore) &&
             (identical(other.question, question) ||
                 other.question == question) &&
             (identical(other.life, life) || other.life == life));
@@ -242,8 +260,8 @@ class _$GameStateImpl implements _GameState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isStarted, isWrong, isCorrect, score, question, life);
+  int get hashCode => Object.hash(runtimeType, isStarted, isWrong, isCorrect,
+      score, bestScore, question, life);
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
@@ -267,6 +285,7 @@ abstract class _GameState implements GameState {
       final bool isWrong,
       final bool isCorrect,
       final int score,
+      final int? bestScore,
       final Question? question,
       final int life}) = _$GameStateImpl;
 
@@ -281,6 +300,8 @@ abstract class _GameState implements GameState {
   bool get isCorrect;
   @override
   int get score;
+  @override
+  int? get bestScore;
   @override
   Question? get question;
   @override
