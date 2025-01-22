@@ -44,6 +44,7 @@ class ReadyScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
+                flex: 2,
                 child: Column(
                   children: [
                     Expanded(
@@ -66,6 +67,7 @@ class ReadyScreen extends StatelessWidget {
               ),
               if(state.operator == null && state.level == null)
                 Expanded(
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -133,6 +135,7 @@ class ReadyScreen extends StatelessWidget {
                 ),
               if(state.operator != null && state.level == null)
                 Expanded(
+                  flex: 3,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
