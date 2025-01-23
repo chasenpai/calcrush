@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:calcrush/config/di_setup.dart';
+import 'package:calcrush/presentation/components/game_exit_dialog.dart';
 import 'package:calcrush/presentation/components/game_over_dialog.dart';
 import 'package:calcrush/presentation/game/game_view_model.dart';
 import 'package:calcrush/presentation/game/screen/game_screen.dart';
@@ -86,6 +87,30 @@ class _GameRootState extends State<GameRoot> {
                 _viewModel.generateQuestion(widget.operator, widget.level, 1);
               }
             }
+          },
+          onExitTap: () {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return GameExitDialog(
+                  score: _viewModel.state.score,
+                  //todo !
+                  bestScore: _viewModel.state.bestScore!,
+                  onExitPressed: () async {
+                    if(_viewModel.state.score > _viewModel.state.bestScore!) {
+                      await _viewModel.updateRecord(widget.operator, widget.level);
+                      context.go('/');
+                    }else {
+                      context.go('/');
+                    }
+                  },
+                  onContinuePressed: () {
+                    context.pop();
+                  },
+                );
+              },
+            );
           },
         );
       },

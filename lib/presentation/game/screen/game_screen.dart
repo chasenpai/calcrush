@@ -1,4 +1,5 @@
 import 'package:calcrush/presentation/components/common_flexible_button.dart';
+import 'package:calcrush/presentation/components/common_text_button.dart';
 import 'package:calcrush/presentation/game/game_state.dart';
 import 'package:calcrush/ui/ui_colors.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,12 @@ import 'package:flutter/material.dart';
 class GameScreen extends StatelessWidget {
   final GameState state;
   final Function(int) onOptionTap;
+  final VoidCallback onExitTap;
 
   const GameScreen({
     required this.state,
     required this.onOptionTap,
+    required this.onExitTap,
     super.key,
   });
 
@@ -47,33 +50,51 @@ class GameScreen extends StatelessWidget {
                 ],
               ),
               if(state.question != null)
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    child: state.isCorrect || state.isWrong ? Center(
-                      child: Text(
-                        state.isCorrect ? 'Correct!' : 'Wrong',
-                        style: TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.w700,
-                          color: state.isCorrect ? Colors.green : Colors.red,
-                        ),
-                      ),
-                    ) : null,
-                  ),
-                ),
               if(state.question != null)
                 Expanded(
-                  flex: 3,
-                  child: Text(
-                    state.isWrong
-                      ? '${state.question!.expression} = ${state.question!.correctAnswer}'
-                      : state.question!.expression,
-                    style: const TextStyle(
-                      fontSize: 52.0,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 44.0,
+                        child: state.isCorrect || state.isWrong ? Center(
+                          child: Text(
+                            state.isCorrect ? 'Correct!' : 'Wrong',
+                            style: TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.w700,
+                              color: state.isCorrect ? Colors.green : Colors.red,
+                            ),
+                          ),
+                        ) : null,
+                      ),
+                      const SizedBox(height: 4.0,),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Column(
+                          children: [
+                            Text(
+                              state.question!.expression,
+                              style: const TextStyle(
+                                fontSize: 52.0,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            if(state.isWrong)
+                              Text(
+                                '= ${state.question!.correctAnswer.toString()}',
+                                style: const TextStyle(
+                                  fontSize: 52.0,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 44.0,),
+                    ],
                   ),
                 ),
               if(state.question != null)
@@ -132,7 +153,13 @@ class GameScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: 60.0,),
+              const SizedBox(height: 32.0,),
+              CommonTextButton(
+                text: 'Exit',
+                color: deepRoyalBlue,
+                onPressed: onExitTap,
+              ),
+              const SizedBox(height: 40.0,),
             ],
           ),
         ),

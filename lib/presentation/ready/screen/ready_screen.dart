@@ -178,7 +178,7 @@ class ReadyScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              const SizedBox(height: 60.0,),
+              const SizedBox(height: 40.0,),
             ],
           ),
         ),
