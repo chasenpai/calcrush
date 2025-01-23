@@ -1,6 +1,7 @@
 import 'package:calcrush/presentation/game/screen/game_root.dart';
 import 'package:calcrush/presentation/home/home_screen.dart';
 import 'package:calcrush/presentation/ready/screen/ready_root.dart';
+import 'package:calcrush/presentation/record/screen/record_root.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -24,6 +25,10 @@ final router = GoRouter(
           level: level,
         );
       },
+    ),
+    GoRoute(
+      path: '/record',
+      builder: (context, state) => const RecordRoot(),
     ),
   ],
 );

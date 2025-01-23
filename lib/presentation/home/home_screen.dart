@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                       text: 'View Records',
                       color: deepRoyalBlue,
                       onPressed: () {
-
+                        context.push('/record');
                       },
                     ),
                   ],
