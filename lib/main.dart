@@ -2,9 +2,12 @@ import 'package:calcrush/config/di_setup.dart';
 import 'package:calcrush/config/router.dart';
 import 'package:calcrush/data/entity/record_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   diSetup();
   await Hive.initFlutter();
   Hive.registerAdapter<RecordEntity>(RecordEntityAdapter());
