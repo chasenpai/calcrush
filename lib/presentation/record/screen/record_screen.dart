@@ -1,9 +1,11 @@
 import 'package:calcrush/presentation/record/record_state.dart';
 import 'package:calcrush/ui/ui_colors.dart';
+import 'package:calcrush/util/admob_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class RecordScreen extends StatelessWidget {
+class RecordScreen extends StatefulWidget {
   final RecordState state;
   final int totalScore;
 
@@ -12,6 +14,53 @@ class RecordScreen extends StatelessWidget {
     required this.totalScore,
     super.key,
   });
+
+  @override
+  State<RecordScreen> createState() => _RecordScreenState();
+}
+
+class _RecordScreenState extends State<RecordScreen> {
+
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if(_bannerAd == null && !_isLoaded) {
+      _loadAd();
+    }
+  }
+
+  Future<void> _loadAd() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+        MediaQuery.sizeOf(context).width.truncate());
+    if (size == null) {
+      return;
+    }
+    _bannerAd = BannerAd(
+      size: size,
+      adUnitId: AdMobService.bannerAdUnitId!,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        },
+      ),
+      request: const AdRequest(),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +86,7 @@ class RecordScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: state.record != null ? ListView(
+                child: widget.state.record != null ? ListView(
                   children: [
                     const SizedBox(height: 50.0,),
                     const Center(
@@ -53,7 +102,7 @@ class RecordScreen extends StatelessWidget {
                     const SizedBox(height: 4.0,),
                     Center(
                       child: Text(
-                        totalScore.toString(),
+                        widget.totalScore.toString(),
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w700,
@@ -69,9 +118,9 @@ class RecordScreen extends StatelessWidget {
                       operatorNameColor: dodgerBlue,
                     ),
                     SectionContent(
-                      level1: state.record!.addition.level1,
-                      level2: state.record!.addition.level2,
-                      level3: state.record!.addition.level3,
+                      level1: widget.state.record!.addition.level1,
+                      level2: widget.state.record!.addition.level2,
+                      level3: widget.state.record!.addition.level3,
                     ),
                     const Divider(
                       thickness: 1.25,
@@ -84,9 +133,9 @@ class RecordScreen extends StatelessWidget {
                       operatorNameColor: dodgerBlue,
                     ),
                     SectionContent(
-                      level1: state.record!.subtraction.level1,
-                      level2: state.record!.subtraction.level2,
-                      level3: state.record!.subtraction.level3,
+                      level1: widget.state.record!.subtraction.level1,
+                      level2: widget.state.record!.subtraction.level2,
+                      level3: widget.state.record!.subtraction.level3,
                     ),
                     const Divider(
                       thickness: 1.25,
@@ -99,9 +148,9 @@ class RecordScreen extends StatelessWidget {
                       operatorNameColor: dodgerBlue,
                     ),
                     SectionContent(
-                      level1: state.record!.multiplication.level1,
-                      level2: state.record!.multiplication.level2,
-                      level3: state.record!.multiplication.level3,
+                      level1: widget.state.record!.multiplication.level1,
+                      level2: widget.state.record!.multiplication.level2,
+                      level3: widget.state.record!.multiplication.level3,
                     ),
                     const Divider(
                       thickness: 1.25,
@@ -114,9 +163,9 @@ class RecordScreen extends StatelessWidget {
                       operatorNameColor: dodgerBlue,
                     ),
                     SectionContent(
-                      level1: state.record!.division.level1,
-                      level2: state.record!.division.level2,
-                      level3: state.record!.division.level3,
+                      level1: widget.state.record!.division.level1,
+                      level2: widget.state.record!.division.level2,
+                      level3: widget.state.record!.division.level3,
                     ),
                     const Divider(
                       thickness: 1.25,
@@ -129,9 +178,9 @@ class RecordScreen extends StatelessWidget {
                       operatorNameColor: dodgerBlue,
                     ),
                     SectionContent(
-                      level1: state.record!.randomOperator.level1,
-                      level2: state.record!.randomOperator.level2,
-                      level3: state.record!.randomOperator.level3,
+                      level1: widget.state.record!.randomOperator.level1,
+                      level2: widget.state.record!.randomOperator.level2,
+                      level3: widget.state.record!.randomOperator.level3,
                     ),
                     const SizedBox(height: 8.0,),
                   ],
@@ -141,6 +190,14 @@ class RecordScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              if(_bannerAd != null && _isLoaded)
+                SizedBox(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(
+                    ad: _bannerAd!,
+                  ),
+                ),
             ],
           )
         ),

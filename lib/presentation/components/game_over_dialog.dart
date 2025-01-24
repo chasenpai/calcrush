@@ -14,7 +14,7 @@ class GameOverDialog extends StatelessWidget {
     required this.bestScore,
     required this.onCancelPressed,
     required this.onAcceptPressed,
-    this.isWatchAd = false,
+    required this.isWatchAd,
     super.key,
   });
 

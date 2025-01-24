@@ -5,8 +5,10 @@ import 'package:calcrush/presentation/components/game_exit_dialog.dart';
 import 'package:calcrush/presentation/components/game_over_dialog.dart';
 import 'package:calcrush/presentation/game/game_view_model.dart';
 import 'package:calcrush/presentation/game/screen/game_screen.dart';
+import 'package:calcrush/util/admob_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class GameRoot extends StatefulWidget {
   final int operator;
@@ -27,6 +29,9 @@ class _GameRootState extends State<GameRoot> {
   late GameViewModel _viewModel;
   StreamSubscription? _subscription;
 
+  InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
+
   @override
   void initState() {
     super.initState();
@@ -41,16 +46,23 @@ class _GameRootState extends State<GameRoot> {
               score: score,
               //todo !
               bestScore: _viewModel.state.bestScore!,
+              isWatchAd: _viewModel.state.isWatchAd,
               onCancelPressed: () async {
                 if(_viewModel.state.score > _viewModel.state.bestScore!) {
                   await _viewModel.updateRecord(widget.operator, widget.level);
+                  _interstitialAd!.show();
                   context.go('/');
                 }else {
+                  _interstitialAd!.show();
                   context.go('/');
                 }
               },
               onAcceptPressed: () {
-                context.go('/');
+                _rewardedAd!.show(onUserEarnedReward: (ad, rewardItem) {
+                  print('reward: $rewardItem');
+                });
+                _viewModel.addBonusLife();
+                context.pop();
               },
               //isWatchAd: true,
             );
@@ -58,12 +70,46 @@ class _GameRootState extends State<GameRoot> {
         );
       }
     });
+    _loadInterstitialAd();
+    _loadRewardedAd();
   }
 
   @override
   void dispose() {
     _subscription?.cancel();
+    _interstitialAd?.dispose();
+    _rewardedAd?.dispose();
     super.dispose();
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdMobService.interstitialAdUnitId!,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (error) {
+          _interstitialAd = null;
+        },
+      ),
+    );
+  }
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdMobService.rewardedAdUnitId!,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+        },
+        onAdFailedToLoad: (error) {
+          _rewardedAd = null;
+        },
+      ),
+    );
   }
 
   @override
@@ -98,6 +144,7 @@ class _GameRootState extends State<GameRoot> {
                   //todo !
                   bestScore: _viewModel.state.bestScore!,
                   onExitPressed: () async {
+                    _interstitialAd!.show();
                     if(_viewModel.state.score > _viewModel.state.bestScore!) {
                       await _viewModel.updateRecord(widget.operator, widget.level);
                       context.go('/');

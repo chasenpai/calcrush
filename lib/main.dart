@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
   diSetup();
   await Hive.initFlutter();
   Hive.registerAdapter<RecordEntity>(RecordEntityAdapter());

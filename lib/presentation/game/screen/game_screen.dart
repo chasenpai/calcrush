@@ -25,17 +25,18 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
 
   BannerAd? _bannerAd;
-  bool _isLoaded = false;
+  bool _isBannerLoaded = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(_bannerAd == null && !_isLoaded) {
-      _loadAd();
+    if(_bannerAd == null && !_isBannerLoaded) {
+      _loadBannerAd();
     }
   }
 
-  Future<void> _loadAd() async {
+  Future<void> _loadBannerAd() async {
+    await Future.delayed(const Duration(milliseconds: 300));
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
         MediaQuery.sizeOf(context).width.truncate());
     if (size == null) {
@@ -47,7 +48,7 @@ class _GameScreenState extends State<GameScreen> {
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           setState(() {
-            _isLoaded = true;
+            _isBannerLoaded = true;
           });
         },
         onAdFailedToLoad: (ad, error) {
@@ -66,7 +67,6 @@ class _GameScreenState extends State<GameScreen> {
   
   @override
   Widget build(BuildContext context) {
-    print('build');
     final List<int> options = widget.state.question != null ? widget.state.question!.options : [];
     return Scaffold(
       body: SafeArea(
@@ -214,7 +214,7 @@ class _GameScreenState extends State<GameScreen> {
                 ),
               ),
             ),
-            if(_bannerAd != null && _isLoaded)
+            if(_bannerAd != null && _isBannerLoaded)
               SizedBox(
                 width: _bannerAd!.size.width.toDouble(),
                 height: _bannerAd!.size.height.toDouble(),

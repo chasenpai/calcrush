@@ -39,6 +39,7 @@ class _ReadyScreenState extends State<ReadyScreen> {
   }
 
   Future<void> _loadAd() async {
+    await Future.delayed(const Duration(milliseconds: 300));
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
       MediaQuery.sizeOf(context).width.truncate());
     if (size == null) {
@@ -55,6 +56,12 @@ class _ReadyScreenState extends State<ReadyScreen> {
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
+        },
+        onAdOpened: (ad) {
+          print('ad open');
+        },
+        onAdClosed: (ad) {
+          print('ad close');
         },
       ),
       request: const AdRequest(),

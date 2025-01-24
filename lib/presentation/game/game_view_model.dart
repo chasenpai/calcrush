@@ -156,6 +156,14 @@ class GameViewModel with ChangeNotifier {
     }
   }
 
+  void addBonusLife() async {
+    _state = _state.copyWith(
+      life: 1,
+      isWatchAd: true,
+    );
+  }
+
+
   Future<void> updateRecord(int operator, int level) async {
     final record = await _recordRepository.getRecord();
     if(record != null) {

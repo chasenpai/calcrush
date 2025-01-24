@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:calcrush/util/admob_ids.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdMobService {
 
@@ -31,28 +30,5 @@ class AdMobService {
     }
     return null;
   }
-
-  // static BannerAdListener createBannerAdListener({
-  //   Function(Ad)? onAdLoaded,
-  //   Function(Ad, LoadAdError)? onAdFailedToLoad,
-  //   Function(Ad)? onAdOpened,
-  //   Function(Ad)? onAdClosed,
-  // }) {
-  //   return BannerAdListener(
-  //     onAdLoaded: onAdLoaded ?? (ad) {
-  //       print('Ad loaded: $ad');
-  //     },
-  //     onAdFailedToLoad: onAdFailedToLoad ?? (ad, error) {
-  //       print('Ad failed to load: $error');
-  //       ad.dispose();
-  //     },
-  //     onAdOpened: onAdOpened ?? (ad) {
-  //       print('Ad Opened: $ad');
-  //     },
-  //     onAdClosed: onAdClosed ?? (ad) {
-  //       print('Ad Closed: $ad');
-  //     },
-  //   );
-  // }
 
 }
