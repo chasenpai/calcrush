@@ -6,6 +6,7 @@ import 'package:calcrush/domain/model/record.dart';
 import 'package:calcrush/domain/repository/record_repository.dart';
 import 'package:calcrush/presentation/game/game_state.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 class GameViewModel with ChangeNotifier {
 
@@ -24,7 +25,7 @@ class GameViewModel with ChangeNotifier {
 
   void startGame(int operator, int level) async {
     _loadRecord(operator, level);
-    generateQuestion(operator, level, 1);
+    generateQuestion(operator, level);
     _state = _state.copyWith(
       isStarted: true,
     );
@@ -37,72 +38,102 @@ class GameViewModel with ChangeNotifier {
     _gameEndController.add(_state.score);
   }
 
-  void generateQuestion(int operator, int level, int digits) async {
+  void generateQuestion(int operator, int level) async {
+    final score = _state.score;
+
+    int minNum1, maxNum1, minNum2, maxNum2;
+    if (score >= 300) {
+      minNum1 = pow(10, 2).toInt();
+      maxNum1 = pow(10, 3).toInt() - 1;
+      minNum2 = pow(10, 2).toInt();
+      maxNum2 = pow(10, 3).toInt() - 1;
+    } else if (score >= 200) {
+      minNum1 = pow(10, 2).toInt();
+      maxNum1 = pow(10, 3).toInt() - 1;
+      minNum2 = pow(10, 1).toInt();
+      maxNum2 = pow(10, 2).toInt() - 1;
+    } else if (score >= 120) {
+      minNum1 = pow(10, 1).toInt();
+      maxNum1 = pow(10, 2).toInt() - 1;
+      minNum2 = pow(10, 1).toInt();
+      maxNum2 = pow(10, 2).toInt() - 1;
+    } else if (score >= 60) {
+      minNum1 = pow(10, 1).toInt();
+      maxNum1 = pow(10, 2).toInt() - 1;
+      minNum2 = 1;
+      maxNum2 = 9;
+    } else {
+      minNum1 = 1;
+      maxNum1 = 9;
+      minNum2 = 1;
+      maxNum2 = 9;
+    }
+
     int correctAnswer = 0;
     String expression = '';
     List<int> numbers = [];
 
-    int minNum = 1;
-    int maxNum = pow(10, digits).toInt() - 1;
-
     int operationCount = level + 1;
 
-    numbers.add(_random.nextInt(maxNum - minNum + 1) + minNum);
-    correctAnswer = numbers[0];
+    int num1 = _random.nextInt(maxNum1 - minNum1 + 1) + minNum1;
+    numbers.add(num1);
+    correctAnswer = num1;
 
     for (int i = 0; i < operationCount; i++) {
-      int num = _random.nextInt(maxNum - minNum + 1) + minNum;
+      int num2 = _random.nextInt(maxNum2 - minNum2 + 1) + minNum2;
       String operatorSymbol = '';
       switch (operator) {
         case 0:
           operatorSymbol = '+';
-          correctAnswer += num;
+          correctAnswer += num2;
+          break;
         case 1:
           operatorSymbol = '-';
-          if (correctAnswer - num < 0) {
-            return generateQuestion(operator, level, digits);
+          if (correctAnswer - num2 < 0) {
+            return generateQuestion(operator, level);
           }
-          correctAnswer -= num;
+          correctAnswer -= num2;
           break;
         case 2:
           operatorSymbol = '×';
-          correctAnswer *= num;
+          correctAnswer *= num2;
           break;
         case 3:
           operatorSymbol = '/';
-          num = num == 0 ? 1 : num;
-          if (correctAnswer ~/ num < 0) {
-            return generateQuestion(operator, level, digits);
+          num2 = num2 == 0 ? 1 : num2;
+          if (correctAnswer % num2 != 0) {
+            return generateQuestion(operator, level);
           }
-          correctAnswer ~/= num;
+          correctAnswer ~/= num2;
           break;
         case 4:
           operatorSymbol = _getRandomOperator();
           switch (operatorSymbol) {
             case '+':
-              correctAnswer += num;
+              correctAnswer += num2;
               break;
             case '-':
-              if (correctAnswer - num < 0) {
-                return generateQuestion(operator, level, digits);
+              if (correctAnswer - num2 < 0) {
+                return generateQuestion(operator, level);
               }
-              correctAnswer -= num;
+              correctAnswer -= num2;
               break;
             case '×':
-              correctAnswer *= num;
+              correctAnswer *= num2;
               break;
             case '/':
-              num = num == 0 ? 1 : num;
-              if (correctAnswer ~/ num < 0) {
-                return generateQuestion(operator, level, digits);
+              num2 = num2 == 0 ? 1 : num2;
+              if (correctAnswer % num2 != 0) {
+                return generateQuestion(operator, level);
               }
-              correctAnswer ~/= num;
+              correctAnswer ~/= num2;
               break;
           }
       }
       expression += '${numbers[i]} $operatorSymbol ';
-      numbers.add(num);
+      numbers.add(num2);
     }
+
     expression += '${numbers.last}';
 
     Set<int> options = {correctAnswer};
@@ -115,14 +146,15 @@ class GameViewModel with ChangeNotifier {
         options.add(wrongAnswer);
       }
     }
-    
+
     List<int> shuffledOptions = options.toList()..shuffle();
-    print(correctAnswer);
+
     final question = Question(
-      expression: expression, 
-      correctAnswer: correctAnswer, 
+      expression: expression,
+      correctAnswer: correctAnswer,
       options: shuffledOptions,
     );
+    print('correct: $correctAnswer');
     _state = _state.copyWith(
       question: question,
       isCorrect: false,
@@ -142,6 +174,13 @@ class GameViewModel with ChangeNotifier {
       isCorrect: true,
     );
     notifyListeners();
+    _vibration();
+  }
+
+  void _vibration() async {
+    if(await Vibration.hasVibrator()) {
+      Vibration.vibrate(duration: 50);
+    }
   }
 
   void wrongAnswer() async {
@@ -154,6 +193,7 @@ class GameViewModel with ChangeNotifier {
     }else {
       stopGame();
     }
+    _vibration();
   }
 
   void addBonusLife() async {
@@ -162,7 +202,6 @@ class GameViewModel with ChangeNotifier {
       isWatchAd: true,
     );
   }
-
 
   Future<void> updateRecord(int operator, int level) async {
     final record = await _recordRepository.getRecord();

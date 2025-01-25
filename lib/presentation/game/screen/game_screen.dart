@@ -42,12 +42,13 @@ class _GameScreenState extends State<GameScreen> {
     if (size == null) {
       return;
     }
-    _bannerAd = BannerAd(
+    BannerAd(
       size: size,
       adUnitId: AdMobService.bannerAdUnitId!,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           setState(() {
+            _bannerAd = ad as BannerAd;
             _isBannerLoaded = true;
           });
         },
@@ -56,7 +57,7 @@ class _GameScreenState extends State<GameScreen> {
         },
       ),
       request: const AdRequest(),
-    )..load();
+    ).load();
   }
 
   @override

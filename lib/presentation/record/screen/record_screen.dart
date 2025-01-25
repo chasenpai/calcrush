@@ -39,12 +39,13 @@ class _RecordScreenState extends State<RecordScreen> {
     if (size == null) {
       return;
     }
-    _bannerAd = BannerAd(
+    BannerAd(
       size: size,
       adUnitId: AdMobService.bannerAdUnitId!,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           setState(() {
+            _bannerAd = ad as BannerAd;
             _isLoaded = true;
           });
         },
@@ -53,7 +54,7 @@ class _RecordScreenState extends State<RecordScreen> {
         },
       ),
       request: const AdRequest(),
-    )..load();
+    ).load();
   }
 
   @override

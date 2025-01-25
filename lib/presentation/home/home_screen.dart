@@ -33,12 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
     if (size == null) {
       return;
     }
-    _bannerAd = BannerAd(
+    BannerAd(
       size: size,
       adUnitId: AdMobService.bannerAdUnitId!,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           setState(() {
+            _bannerAd = ad as BannerAd;
             _isLoaded = true;
           });
         },
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       request: const AdRequest(),
-    )..load();
+    ).load();
   }
 
   @override

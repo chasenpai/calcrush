@@ -44,7 +44,6 @@ class _GameRootState extends State<GameRoot> {
           builder: (context) {
             return GameOverDialog(
               score: score,
-              //todo !
               bestScore: _viewModel.state.bestScore!,
               isWatchAd: _viewModel.state.isWatchAd,
               onCancelPressed: () async {
@@ -59,7 +58,6 @@ class _GameRootState extends State<GameRoot> {
               },
               onAcceptPressed: () {
                 _rewardedAd!.show(onUserEarnedReward: (ad, rewardItem) {
-                  print('reward: $rewardItem');
                 });
                 _viewModel.addBonusLife();
                 context.pop();
@@ -125,12 +123,12 @@ class _GameRootState extends State<GameRoot> {
             if(value == _viewModel.state.question!.correctAnswer) {
               _viewModel.correctAnswer();
               await Future.delayed(const Duration(milliseconds: 1500));
-              _viewModel.generateQuestion(widget.operator, widget.level, 1);
+              _viewModel.generateQuestion(widget.operator, widget.level);
             }else {
               _viewModel.wrongAnswer();
               await Future.delayed(const Duration(milliseconds: 1500));
               if(_viewModel.state.isStarted) {
-                _viewModel.generateQuestion(widget.operator, widget.level, 1);
+                _viewModel.generateQuestion(widget.operator, widget.level);
               }
             }
           },
@@ -141,7 +139,6 @@ class _GameRootState extends State<GameRoot> {
               builder: (context) {
                 return GameExitDialog(
                   score: _viewModel.state.score,
-                  //todo !
                   bestScore: _viewModel.state.bestScore!,
                   onExitPressed: () async {
                     _interstitialAd!.show();
