@@ -83,12 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Stack(
                                 children: [
                                   Center(
-                                    child: Text(
-                                      'Calcrush',
-                                      style: TextStyle(
-                                        fontSize: 36.0,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black87,
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        'Calcrush',
+                                        style: TextStyle(
+                                          fontSize: 36.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black87,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -145,11 +148,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Center(
-                            child: Text(
-                              'Sharpen your mental math!',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.black87,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                'Sharpen your mental math!',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black87,
+                                ),
                               ),
                             ),
                           ),

@@ -108,14 +108,17 @@ class _ReadyScreenState extends State<ReadyScreen> {
                         children: [
                           Expanded(
                             child: Center(
-                              child: Text(
-                                widget.state.operator == null && widget.state.level == null
-                                    ? 'Choose an operator'
-                                    : 'Choose a level',
-                                style: const TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black87,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.state.operator == null && widget.state.level == null
+                                      ? 'Choose an operator'
+                                      : 'Choose a level',
+                                  style: const TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
                             ),

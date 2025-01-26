@@ -36,6 +36,7 @@ class GameOverDialog extends StatelessWidget {
         children: [
           Text(
             'Score ${score.toString()}',
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w500,
@@ -45,6 +46,7 @@ class GameOverDialog extends StatelessWidget {
           const SizedBox(height: 4.0,),
           Text(
             'Best Score ${bestScore.toString()}',
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w500,
@@ -54,6 +56,7 @@ class GameOverDialog extends StatelessWidget {
           const SizedBox(height: 6.0,),
           const Text(
             'Watch an ad and get a life',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w500,
