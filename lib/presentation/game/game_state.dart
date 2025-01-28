@@ -10,7 +10,7 @@ class GameState with _$GameState {
     @Default(false) bool isStarted,
     @Default(false) bool isWrong,
     @Default(false) bool isCorrect,
-    @Default(false) bool isWatchAd,
+    @Default(false) bool isLifeAdWatched,
     @Default(0) int score,
     int? bestScore,
     Question? question,

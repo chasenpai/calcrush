@@ -7,14 +7,14 @@ class GameOverDialog extends StatelessWidget {
   final int bestScore;
   final VoidCallback onCancelPressed;
   final VoidCallback onAcceptPressed;
-  final bool isWatchAd;
+  final bool isAdWatched;
 
   const GameOverDialog({
     required this.score,
     required this.bestScore,
     required this.onCancelPressed,
     required this.onAcceptPressed,
-    required this.isWatchAd,
+    required this.isAdWatched,
     super.key,
   });
 
@@ -68,7 +68,7 @@ class GameOverDialog extends StatelessWidget {
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: isWatchAd ? [
+          children: isAdWatched ? [
             CommonTextButton(
               text: 'Go Home',
               color: deepRoyalBlue,

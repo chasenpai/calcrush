@@ -20,6 +20,7 @@ class RecordViewModel with ChangeNotifier {
     _state = _state.copyWith(
       isLoading: true,
     );
+    notifyListeners();
     final record = await _recordRepository.getRecord();
     if(record != null) {
       _state = _state.copyWith(

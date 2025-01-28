@@ -23,7 +23,7 @@ mixin _$GameState {
   bool get isStarted => throw _privateConstructorUsedError;
   bool get isWrong => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
-  bool get isWatchAd => throw _privateConstructorUsedError;
+  bool get isLifeAdWatched => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
   int? get bestScore => throw _privateConstructorUsedError;
   Question? get question => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $GameStateCopyWith<$Res> {
       {bool isStarted,
       bool isWrong,
       bool isCorrect,
-      bool isWatchAd,
+      bool isLifeAdWatched,
       int score,
       int? bestScore,
       Question? question,
@@ -75,7 +75,7 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
     Object? isStarted = null,
     Object? isWrong = null,
     Object? isCorrect = null,
-    Object? isWatchAd = null,
+    Object? isLifeAdWatched = null,
     Object? score = null,
     Object? bestScore = freezed,
     Object? question = freezed,
@@ -94,9 +94,9 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
-      isWatchAd: null == isWatchAd
-          ? _value.isWatchAd
-          : isWatchAd // ignore: cast_nullable_to_non_nullable
+      isLifeAdWatched: null == isLifeAdWatched
+          ? _value.isLifeAdWatched
+          : isLifeAdWatched // ignore: cast_nullable_to_non_nullable
               as bool,
       score: null == score
           ? _value.score
@@ -144,7 +144,7 @@ abstract class _$$GameStateImplCopyWith<$Res>
       {bool isStarted,
       bool isWrong,
       bool isCorrect,
-      bool isWatchAd,
+      bool isLifeAdWatched,
       int score,
       int? bestScore,
       Question? question,
@@ -170,7 +170,7 @@ class __$$GameStateImplCopyWithImpl<$Res>
     Object? isStarted = null,
     Object? isWrong = null,
     Object? isCorrect = null,
-    Object? isWatchAd = null,
+    Object? isLifeAdWatched = null,
     Object? score = null,
     Object? bestScore = freezed,
     Object? question = freezed,
@@ -189,9 +189,9 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
-      isWatchAd: null == isWatchAd
-          ? _value.isWatchAd
-          : isWatchAd // ignore: cast_nullable_to_non_nullable
+      isLifeAdWatched: null == isLifeAdWatched
+          ? _value.isLifeAdWatched
+          : isLifeAdWatched // ignore: cast_nullable_to_non_nullable
               as bool,
       score: null == score
           ? _value.score
@@ -220,7 +220,7 @@ class _$GameStateImpl implements _GameState {
       {this.isStarted = false,
       this.isWrong = false,
       this.isCorrect = false,
-      this.isWatchAd = false,
+      this.isLifeAdWatched = false,
       this.score = 0,
       this.bestScore,
       this.question,
@@ -240,7 +240,7 @@ class _$GameStateImpl implements _GameState {
   final bool isCorrect;
   @override
   @JsonKey()
-  final bool isWatchAd;
+  final bool isLifeAdWatched;
   @override
   @JsonKey()
   final int score;
@@ -254,7 +254,7 @@ class _$GameStateImpl implements _GameState {
 
   @override
   String toString() {
-    return 'GameState(isStarted: $isStarted, isWrong: $isWrong, isCorrect: $isCorrect, isWatchAd: $isWatchAd, score: $score, bestScore: $bestScore, question: $question, life: $life)';
+    return 'GameState(isStarted: $isStarted, isWrong: $isWrong, isCorrect: $isCorrect, isLifeAdWatched: $isLifeAdWatched, score: $score, bestScore: $bestScore, question: $question, life: $life)';
   }
 
   @override
@@ -267,8 +267,8 @@ class _$GameStateImpl implements _GameState {
             (identical(other.isWrong, isWrong) || other.isWrong == isWrong) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
-            (identical(other.isWatchAd, isWatchAd) ||
-                other.isWatchAd == isWatchAd) &&
+            (identical(other.isLifeAdWatched, isLifeAdWatched) ||
+                other.isLifeAdWatched == isLifeAdWatched) &&
             (identical(other.score, score) || other.score == score) &&
             (identical(other.bestScore, bestScore) ||
                 other.bestScore == bestScore) &&
@@ -280,7 +280,7 @@ class _$GameStateImpl implements _GameState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, isStarted, isWrong, isCorrect,
-      isWatchAd, score, bestScore, question, life);
+      isLifeAdWatched, score, bestScore, question, life);
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
@@ -303,7 +303,7 @@ abstract class _GameState implements GameState {
       {final bool isStarted,
       final bool isWrong,
       final bool isCorrect,
-      final bool isWatchAd,
+      final bool isLifeAdWatched,
       final int score,
       final int? bestScore,
       final Question? question,
@@ -319,7 +319,7 @@ abstract class _GameState implements GameState {
   @override
   bool get isCorrect;
   @override
-  bool get isWatchAd;
+  bool get isLifeAdWatched;
   @override
   int get score;
   @override

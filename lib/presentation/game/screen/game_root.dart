@@ -45,7 +45,7 @@ class _GameRootState extends State<GameRoot> {
             return GameOverDialog(
               score: score,
               bestScore: _viewModel.state.bestScore!,
-              isWatchAd: _viewModel.state.isWatchAd,
+              isAdWatched: _viewModel.state.isLifeAdWatched,
               onCancelPressed: () async {
                 if(_viewModel.state.score > _viewModel.state.bestScore!) {
                   await _viewModel.updateRecord(widget.operator, widget.level);
@@ -62,7 +62,6 @@ class _GameRootState extends State<GameRoot> {
                 _viewModel.addBonusLife();
                 context.pop();
               },
-              //isWatchAd: true,
             );
           },
         );

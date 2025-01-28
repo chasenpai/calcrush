@@ -80,14 +80,14 @@ class _RecordScreenState extends State<RecordScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30.0,
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: widget.state.record != null ? ListView(
+        child: Column(
+          children: [
+            Expanded(
+              child: widget.state.record != null ? Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                ),
+                child: ListView(
                   children: [
                     const SizedBox(height: 50.0,),
                     const Center(
@@ -185,22 +185,22 @@ class _RecordScreenState extends State<RecordScreen> {
                     ),
                     const SizedBox(height: 8.0,),
                   ],
-                ) : const Center(
-                  child: Text(
-                    'No records',
-                  ),
+                ),
+              ) : const Center(
+                child: Text(
+                  'No records',
                 ),
               ),
-              if(_bannerAd != null && _isLoaded)
-                SizedBox(
-                  width: _bannerAd!.size.width.toDouble(),
-                  height: _bannerAd!.size.height.toDouble(),
-                  child: AdWidget(
-                    ad: _bannerAd!,
-                  ),
+            ),
+            if(_bannerAd != null && _isLoaded)
+              SizedBox(
+                width: _bannerAd!.size.width.toDouble(),
+                height: _bannerAd!.size.height.toDouble(),
+                child: AdWidget(
+                  ad: _bannerAd!,
                 ),
-            ],
-          )
+              ),
+          ],
         ),
       ),
     );
