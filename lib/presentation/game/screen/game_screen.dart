@@ -69,161 +69,167 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     final List<int> options = widget.state.question != null ? widget.state.question!.options : [];
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 60.0,
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 30.0,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Score ${widget.state.score.toString()}',
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0,
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Score ${widget.state.score.toString()}',
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Life ${widget.state.life.toString()}',
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
+                          Text(
+                            'Life ${widget.state.life.toString()}',
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    if(widget.state.question != null)
-                      Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 44.0,
-                                child: widget.state.isCorrect || widget.state.isWrong ? Center(
-                                  child: Text(
-                                    widget.state.isCorrect ? 'Correct!' : 'Wrong',
-                                    style: TextStyle(
-                                      fontSize: 32.0,
-                                      fontWeight: FontWeight.w700,
-                                      color: widget.state.isCorrect ? Colors.green : Colors.red,
-                                    ),
-                                  ),
-                                ) : null,
-                              ),
-                              const SizedBox(height: 4.0,),
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      widget.state.question!.expression,
-                                      style: const TextStyle(
-                                        fontSize: 52.0,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black87,
+                        ],
+                      ),
+                      if(widget.state.question != null)
+                        Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 44.0,
+                                  child: widget.state.isCorrect || widget.state.isWrong ? Center(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        widget.state.isCorrect ? 'Correct!' : 'Wrong',
+                                        style: TextStyle(
+                                          fontSize: 32.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: widget.state.isCorrect ? Colors.green : Colors.red,
+                                        ),
                                       ),
                                     ),
-                                    if(widget.state.isWrong)
+                                  ) : null,
+                                ),
+                                const SizedBox(height: 4.0,),
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Column(
+                                    children: [
                                       Text(
-                                        '= ${widget.state.question!.correctAnswer.toString()}',
+                                        widget.state.question!.expression,
                                         style: const TextStyle(
                                           fontSize: 52.0,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black87,
                                         ),
                                       ),
-                                  ],
+                                      if(widget.state.isWrong)
+                                        Text(
+                                          '= ${widget.state.question!.correctAnswer.toString()}',
+                                          style: const TextStyle(
+                                            fontSize: 52.0,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 44.0,),
-                            ],
+                                const SizedBox(height: 44.0,),
+                              ],
+                            ),
                           ),
+                      if(widget.state.question != null)
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CommonFlexibleButton(
+                                    text: options[0].toString(),
+                                    onPressed: () {
+                                      widget.onOptionTap(options[0]);
+                                    },
+                                    color: lightBlue,
+                                    fontSize: 48.0,
+                                  ),
+                                ),
+                                const SizedBox(width: 16.0,),
+                                Expanded(
+                                  child: CommonFlexibleButton(
+                                    text: options[1].toString(),
+                                    onPressed: () {
+                                      widget.onOptionTap(options[1]);
+                                    },
+                                    color: skyBlue,
+                                    fontSize: 48.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16.0,),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: CommonFlexibleButton(
+                                    text: options[2].toString(),
+                                    onPressed: () {
+                                      widget.onOptionTap(options[2]);
+                                    },
+                                    color: dodgerBlue,
+                                    fontSize: 48.0,
+                                  ),
+                                ),
+                                const SizedBox(width: 16.0,),
+                                Expanded(
+                                  child: CommonFlexibleButton(
+                                    text: options[3].toString(),
+                                    onPressed: () {
+                                      widget.onOptionTap(options[3]);
+                                    },
+                                    color: royalBlue,
+                                    fontSize: 48.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                    if(widget.state.question != null)
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CommonFlexibleButton(
-                                  text: options[0].toString(),
-                                  onPressed: () {
-                                    widget.onOptionTap(options[0]);
-                                  },
-                                  color: lightBlue,
-                                  fontSize: 48.0,
-                                ),
-                              ),
-                              const SizedBox(width: 16.0,),
-                              Expanded(
-                                child: CommonFlexibleButton(
-                                  text: options[1].toString(),
-                                  onPressed: () {
-                                    widget.onOptionTap(options[1]);
-                                  },
-                                  color: skyBlue,
-                                  fontSize: 48.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16.0,),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CommonFlexibleButton(
-                                  text: options[2].toString(),
-                                  onPressed: () {
-                                    widget.onOptionTap(options[2]);
-                                  },
-                                  color: dodgerBlue,
-                                  fontSize: 48.0,
-                                ),
-                              ),
-                              const SizedBox(width: 16.0,),
-                              Expanded(
-                                child: CommonFlexibleButton(
-                                  text: options[3].toString(),
-                                  onPressed: () {
-                                    widget.onOptionTap(options[3]);
-                                  },
-                                  color: royalBlue,
-                                  fontSize: 48.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      const SizedBox(height: 16.0,),
+                      CommonTextButton(
+                        text: 'Exit',
+                        color: deepRoyalBlue,
+                        onPressed: widget.onExitTap,
                       ),
-                    const SizedBox(height: 32.0,),
-                    CommonTextButton(
-                      text: 'Exit',
-                      color: deepRoyalBlue,
-                      onPressed: widget.onExitTap,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            if(_bannerAd != null && _isBannerLoaded)
-              SizedBox(
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                child: AdWidget(
-                  ad: _bannerAd!,
+              if(_bannerAd != null && _isBannerLoaded)
+                SizedBox(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(
+                    ad: _bannerAd!,
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

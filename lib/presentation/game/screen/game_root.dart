@@ -112,51 +112,54 @@ class _GameRootState extends State<GameRoot> {
   @override
   Widget build(BuildContext context) {
     _viewModel.startGame(widget.operator, widget.level);
-    return ListenableBuilder(
-      listenable: _viewModel,
-      builder: (context, _) {
-        return GameScreen(
-          state: _viewModel.state,
-          onOptionTap: (value) async {
-            if(_viewModel.state.isCorrect || _viewModel.state.isWrong) return;
-            if(value == _viewModel.state.question!.correctAnswer) {
-              _viewModel.correctAnswer();
-              await Future.delayed(const Duration(milliseconds: 1500));
-              _viewModel.generateQuestion(widget.operator, widget.level);
-            }else {
-              _viewModel.wrongAnswer();
-              await Future.delayed(const Duration(milliseconds: 1500));
-              if(_viewModel.state.isStarted) {
+    return PopScope(
+      canPop: false,
+      child: ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, _) {
+          return GameScreen(
+            state: _viewModel.state,
+            onOptionTap: (value) async {
+              if(_viewModel.state.isCorrect || _viewModel.state.isWrong) return;
+              if(value == _viewModel.state.question!.correctAnswer) {
+                _viewModel.correctAnswer();
+                await Future.delayed(const Duration(milliseconds: 1500));
                 _viewModel.generateQuestion(widget.operator, widget.level);
+              }else {
+                _viewModel.wrongAnswer();
+                await Future.delayed(const Duration(milliseconds: 1500));
+                if(_viewModel.state.isStarted) {
+                  _viewModel.generateQuestion(widget.operator, widget.level);
+                }
               }
-            }
-          },
-          onExitTap: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) {
-                return GameExitDialog(
-                  score: _viewModel.state.score,
-                  bestScore: _viewModel.state.bestScore!,
-                  onExitPressed: () async {
-                    _interstitialAd!.show();
-                    if(_viewModel.state.score > _viewModel.state.bestScore!) {
-                      await _viewModel.updateRecord(widget.operator, widget.level);
-                      context.go('/');
-                    }else {
-                      context.go('/');
-                    }
-                  },
-                  onContinuePressed: () {
-                    context.pop();
-                  },
-                );
-              },
-            );
-          },
-        );
-      },
+            },
+            onExitTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return GameExitDialog(
+                    score: _viewModel.state.score,
+                    bestScore: _viewModel.state.bestScore!,
+                    onExitPressed: () async {
+                      _interstitialAd!.show();
+                      if(_viewModel.state.score > _viewModel.state.bestScore!) {
+                        await _viewModel.updateRecord(widget.operator, widget.level);
+                        context.go('/');
+                      }else {
+                        context.go('/');
+                      }
+                    },
+                    onContinuePressed: () {
+                      context.pop();
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

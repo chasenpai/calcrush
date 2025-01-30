@@ -174,12 +174,8 @@ class GameViewModel with ChangeNotifier {
       isCorrect: true,
     );
     notifyListeners();
-    _vibration();
-  }
-
-  void _vibration() async {
     if(await Vibration.hasVibrator()) {
-      Vibration.vibrate(duration: 50);
+      Vibration.vibrate(duration: 100);
     }
   }
 
@@ -193,7 +189,9 @@ class GameViewModel with ChangeNotifier {
     }else {
       stopGame();
     }
-    _vibration();
+    if(await Vibration.hasVibrator()) {
+      Vibration.vibrate(duration: 200);
+    }
   }
 
   void addBonusLife() async {

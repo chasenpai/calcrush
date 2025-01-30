@@ -49,12 +49,15 @@ class _CommonTextButtonState extends State<CommonTextButton> {
           color: _isPressed ? lightGrey : Colors.transparent,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Text(
-          widget.text,
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w700,
-            color: widget.color,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            widget.text,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+              color: widget.color,
+            ),
           ),
         ),
       ),

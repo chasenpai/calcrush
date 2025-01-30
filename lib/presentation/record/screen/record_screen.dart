@@ -85,7 +85,7 @@ class _RecordScreenState extends State<RecordScreen> {
             Expanded(
               child: widget.state.record != null ? Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0,
+                  horizontal: 20.0,
                 ),
                 child: ListView(
                   children: [

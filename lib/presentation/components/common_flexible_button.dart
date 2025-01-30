@@ -6,12 +6,14 @@ class CommonFlexibleButton extends StatefulWidget {
   final VoidCallback onPressed;
   final Color color;
   final double fontSize;
+  final double? minHeight;
 
   const CommonFlexibleButton({
     required this.text,
     required this.onPressed,
     required this.color,
     required this.fontSize,
+    this.minHeight,
     super.key,
   });
 
@@ -43,9 +45,9 @@ class _CommonFlexibleButtonState extends State<CommonFlexibleButton> {
         });
       },
       child: Container(
-        constraints: const BoxConstraints(
-          minHeight: 86.0,
-        ),
+        constraints: widget.minHeight != null ?BoxConstraints(
+          minHeight: widget.minHeight!,
+        ) : null,
         decoration: BoxDecoration(
           color: _isPressed ? lightGrey : widget.color,
           borderRadius: BorderRadius.circular(10.0),
